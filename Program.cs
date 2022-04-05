@@ -16,7 +16,6 @@ namespace HomeWokrCardDeck2._0
             {
                 Console.WriteLine("Закончить набирать карты  выбериет  1");
                 player.AddCard();
-
             }
 
             Console.WriteLine("Игрок закончил набор карт");
