@@ -11,11 +11,13 @@ namespace HomeWokrCardDeck2._0
         static void Main(string[] args)
         {
             Player player = new Player();
+            string end = Console.ReadLine();
 
-            while (Convert.ToInt32(Console.ReadLine()) != 1)
+            while (end != "end")
             {
-                Console.WriteLine("Закончить набирать карты  выбериет  1");
+                Console.WriteLine("Что бы закончить набирать карты  введите end ");
                 player.AddCard();
+                end = Console.ReadLine();
             }
 
             Console.WriteLine("Игрок закончил набор карт");
@@ -26,7 +28,7 @@ namespace HomeWokrCardDeck2._0
     class Player
     {
         private List<Card> _cardPlayer = new List<Card>();
-        Deck _deck = new Deck();       
+        private Deck _deck = new Deck();
 
         public void AddCard()
         {
@@ -46,10 +48,10 @@ namespace HomeWokrCardDeck2._0
             }
             else
             {
-                Console.WriteLine("Карт больше нету");                
+                Console.WriteLine("Карт больше нету");
             }
         }
-        
+
         public void ShowItems()
         {
             foreach (var card in _cardPlayer)
@@ -60,15 +62,23 @@ namespace HomeWokrCardDeck2._0
     }
     class Deck
     {
-        public List<Card> Card { get; private set; } = new List<Card>();
+        private List<Card> _card = new List<Card>();
+
+        public List<Card> Card { get; private set; }
 
         public Deck()
         {
-            Card.Add(new Card("шесть пики"));
-            Card.Add(new Card("шесть трефы"));
-            Card.Add(new Card("шесть червы"));
-            Card.Add(new Card("шесть бубны"));
-            Card.Add(new Card("семь  пики"));
+            AddCard();
+            Card = _card;
+        }
+
+        private void AddCard()
+        {
+            _card.Add(new Card("шесть пики"));
+            _card.Add(new Card("шесть трефы"));
+            _card.Add(new Card("шесть червы"));
+            _card.Add(new Card("шесть бубны"));
+            _card.Add(new Card("семь  пики"));
         }
     }
 
@@ -81,4 +91,4 @@ namespace HomeWokrCardDeck2._0
             Title = title;
         }
     }
-}   
+}
