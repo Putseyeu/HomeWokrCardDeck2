@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HomeWokrCardDeck2._0
+namespace HomeWokrCardDeck3
 {
     internal class Program
     {
@@ -28,17 +28,14 @@ namespace HomeWokrCardDeck2._0
 
     class Player
     {
-        private List<Card> _card = new List<Card>();
+        private List<Card> _cards = new List<Card>();
         private Deck _deck = new Deck();
 
         public void AddCard()
         {
-            if (_deck.Card.Count != 0)
+            if (_deck.CardsCount != 0)
             {
-                Random random = new Random();
-                int randomCard = random.Next(0, _deck.Card.Count);
-                _card.Add(_deck.Card[randomCard]);
-                _deck.Card.Remove(_deck.Card[randomCard]);
+                _cards.Add(_deck.GetRandomCard());
             }
             else
             {
@@ -46,46 +43,50 @@ namespace HomeWokrCardDeck2._0
             }
         }
 
-        public void ShowItems() 
+        public void ShowItems()
         {
-            foreach (var card in _card)
+            foreach (var card in _cards)
             {
                 Console.WriteLine(card.Title);
             }
         }
     }
+
     class Deck
     {
-        private List<Card> _card = new List<Card>();
+        private List<Card> _cards = new List<Card>();
 
-        public List<Card> Card { get; private set; }
+        public int CardsCount { get { return _cards.Count; } }
 
         public Deck()
         {
             AddCards();
-            GreatDeck();
         }
 
         private void AddCards()
         {
             List<string> cardSuit = new List<string>() { "бубны", "червы", "червы", "трефы" };
-            List<string> cardRank = new List<string>() { "шесть", "семь","восемь","девять", "десять", "валет", "дама", "король", "туз"};
+            List<string> cardRank = new List<string>() { "шесть", "семь", "восемь", "девять", "десять", "валет", "дама", "король", "туз" };
 
             for (int i = 0; i < cardRank.Count; i++)
             {
                 for (int j = 0; j < cardSuit.Count; j++)
                 {
-                    _card.Add(new Card(cardRank[i] + " " + cardSuit[j]));
+                    _cards.Add(new Card(cardRank[i] + " " + cardSuit[j]));
                 }
             }
         }
 
-        private void GreatDeck()
+        public Card GetRandomCard()
         {
-            Card = _card;
+            Random random = new Random();
+            int randomIndexCard = random.Next(0, _cards.Count);
+            Card randomCard = _cards[randomIndexCard];
+            _cards.Remove(randomCard);
+            return randomCard;
         }
     }
-
+    
     class Card
     {
         public string Title { get; private set; }
