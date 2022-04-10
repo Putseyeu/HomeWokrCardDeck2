@@ -11,13 +11,14 @@ namespace HomeWokrCardDeck2._0
         static void Main(string[] args)
         {
             Player player = new Player();
-            string end = Console.ReadLine();
+            Console.WriteLine("Игрок достает карты, пока не решит, что ему хватит карт. end - закончить набор карт.");
+            string userInput = Console.ReadLine();
 
-            while (end != "end")
+            while (userInput != "end")
             {
-                Console.WriteLine("Что бы закончить набирать карты  введите end ");
+                Console.WriteLine("Вы получили карту. Что бы закончить набирать карты  введите end ");
                 player.AddCard();
-                end = Console.ReadLine();
+                userInput = Console.ReadLine();
             }
 
             Console.WriteLine("Игрок закончил набор карт");
@@ -27,24 +28,17 @@ namespace HomeWokrCardDeck2._0
 
     class Player
     {
-        private List<Card> _cardPlayer = new List<Card>();
+        private List<Card> _card = new List<Card>();
         private Deck _deck = new Deck();
 
         public void AddCard()
         {
-            if (_cardPlayer.Count != _deck.Card.Count)
+            if (_deck.Card.Count != 0)
             {
-                bool chekCard = false;
-                while (chekCard != true)
-                {
-                    Random random = new Random();
-                    int randomCard = random.Next(0, _deck.Card.Count);
-                    if (_cardPlayer.Contains(_deck.Card[randomCard]) == false)
-                    {
-                        _cardPlayer.Add(_deck.Card[randomCard]);
-                        chekCard = true;
-                    }
-                }
+                Random random = new Random();
+                int randomCard = random.Next(0, _deck.Card.Count);
+                _card.Add(_deck.Card[randomCard]);
+                _deck.Card.Remove(_deck.Card[randomCard]);
             }
             else
             {
@@ -52,9 +46,9 @@ namespace HomeWokrCardDeck2._0
             }
         }
 
-        public void ShowItems()
+        public void ShowItems() 
         {
-            foreach (var card in _cardPlayer)
+            foreach (var card in _card)
             {
                 Console.WriteLine(card.Title);
             }
@@ -68,17 +62,27 @@ namespace HomeWokrCardDeck2._0
 
         public Deck()
         {
-            AddCard();
-            Card = _card;
+            AddCards();
+            GreatDeck();
         }
 
-        private void AddCard()
+        private void AddCards()
         {
-            _card.Add(new Card("шесть пики"));
-            _card.Add(new Card("шесть трефы"));
-            _card.Add(new Card("шесть червы"));
-            _card.Add(new Card("шесть бубны"));
-            _card.Add(new Card("семь  пики"));
+            List<string> cardSuit = new List<string>() { "бубны", "червы", "червы", "трефы" };
+            List<string> cardRank = new List<string>() { "шесть", "семь","восемь","девять", "десять", "валет", "дама", "король", "туз"};
+
+            for (int i = 0; i < cardRank.Count; i++)
+            {
+                for (int j = 0; j < cardSuit.Count; j++)
+                {
+                    _card.Add(new Card(cardRank[i] + " " + cardSuit[j]));
+                }
+            }
+        }
+
+        private void GreatDeck()
+        {
+            Card = _card;
         }
     }
 
